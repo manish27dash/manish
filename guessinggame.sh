@@ -1,29 +1,30 @@
 #!/usr/bin/env bash
-# File: guessinggame.sh
+#FileName: guessinggame.sh
 
-arrdir=($(ls -d */))
-cntdir=${#arrdir[@]}
-guessdir=0
+filenum=$(ls | wc -l)
 
-function guess {
-    # Usage of an if statement
-    if [[ $1 -lt $2 ]]
-    then
-    echo "echo $1 is less than $2"
-    elif [[ $1 -gt $2 ]]
-    then
-    echo "echo $1 is greater than $2"
-    fi
+function guess_filenum {
+	read guess
+	if [[ $guess -eq $filenum ]]
+	then
+		echo "You guessed it!"
+		echo "  So we have ..."
+		for f in $(ls)
+		do
+			echo "  - $f and "
+		done
+		echo "    ... and that was it."
+	else
+		if [[ $guess -gt $filenum ]]
+		then
+			echo "There is less. Try again :"
+			guess_filenum
+		else
+			echo "There is more. Try again :"
+			guess_filenum
+		fi
+	fi
 }
 
-# Usage of a loop
-while [ $guessdir -ne $cntdir ]
-do
-echo "Guess the number of directories!"
-# user response
-read guessdir
-
-$(guess $guessdir $cntdir)
-
-done
-echo "Thats Correct..."
+echo "Guess how many files are in the current directory and press Enter :"
+guess_filenum
