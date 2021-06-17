@@ -6,7 +6,7 @@ filenum=$(ls | wc -l)
 # 1. a function
 function guess_filenum {
 	read guess
-	# 2. an if condition
+	# 2. an if else condition
 	if [[ $guess -eq $filenum ]]
 	then
 		echo "You guessed it!"
